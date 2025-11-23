@@ -1,97 +1,99 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# OpenCode Mobile Client
 
-# Getting Started
+This is a React Native mobile client for the OpenCode server. It allows you to connect to an OpenCode server and interact with agents from your mobile device.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## Prerequisites
 
-## Step 1: Start Metro
+Before you begin, ensure you have the following installed on your development machine:
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+*   **Node.js and npm:** [Download and install Node.js](https://nodejs.org/) (which includes npm).
+*   **React Native CLI:** Follow the official React Native documentation to set up your development environment. You will need the React Native CLI, not the Expo CLI. [React Native Environment Setup](https://reactnative.dev/docs/environment-setup)
+*   **Android Studio:** To build and run the app on Android, you will need to install Android Studio and set up an Android Virtual Device (AVD).
+*   **Xcode:** To build and run the app on iOS, you will need a Mac with Xcode installed.
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+## Running the Client for Development
 
-```sh
-# Using npm
-npm start
+1.  **Install Dependencies:** Navigate to the `mobile` directory and install the required dependencies:
 
-# OR using Yarn
-yarn start
+    ```bash
+    cd mobile
+    npm install
+    ```
+
+2.  **Start the Metro Bundler:** In a separate terminal window, start the Metro bundler:
+
+    ```bash
+    npm start
+    ```
+
+3.  **Run on Android:**
+
+    *   Ensure you have an Android emulator running or a physical device connected.
+    *   Run the following command:
+
+        ```bash
+        npm run android
+        ```
+
+4.  **Run on iOS:**
+
+    *   Ensure you have an iOS simulator running or a physical device connected.
+    *   Run the following command:
+
+        ```bash
+        npm run ios
+        ```
+
+## Testing the Client
+
+To run the unit tests for the mobile client, run the following command from the `mobile` directory:
+
+```bash
+npm test
 ```
 
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+## Building and Distributing the App
 
 ### Android
 
-```sh
-# Using npm
-npm run android
+1.  **Generate a Release Build:** To create a release build (AAB file for the Play Store), run the following command:
 
-# OR using Yarn
-yarn android
-```
+    ```bash
+    cd android
+    ./gradlew bundleRelease
+    ```
+
+    This will generate a signed AAB file in `android/app/build/outputs/bundle/release/`.
+
+2.  **Signing the App:** Before you can distribute your app, you must sign it. Follow the official React Native documentation for [signing your Android app](https://reactnative.dev/docs/signed-apk-android).
 
 ### iOS
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+1.  **Open in Xcode:** Open the `mobile/ios/mobile.xcworkspace` file in Xcode.
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+2.  **Configure Signing:** In Xcode, you will need to set up your Apple Developer account and configure code signing for the app.
 
-```sh
-bundle install
-```
+3.  **Build and Archive:** You can then build and archive the app for release through Xcode. This will create an `.ipa` file that you can upload to the App Store or distribute through TestFlight.
 
-Then, and every time you update your native dependencies, run:
+## Using the App on a Physical Device
 
-```sh
-bundle exec pod install
-```
+### Android
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+You can install the app on a physical Android device by generating an APK file and "sideloading" it.
 
-```sh
-# Using npm
-npm run ios
+1.  **Generate an APK:** Run the following command to generate a release APK:
 
-# OR using Yarn
-yarn ios
-```
+    ```bash
+    cd android
+    ./gradlew assembleRelease
+    ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+2.  **Install the APK:** The generated APK can be found in `android/app/build/outputs/apk/release/`. You can transfer this file to your Android device and install it.
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+### iOS
 
-## Step 3: Modify your app
+Installing an app on a physical iOS device is more complex than on Android and typically requires one of the following:
 
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+*   **TestFlight:** You can use Apple's TestFlight service to distribute beta versions of your app to testers.
+*   **App Store:** The app must be published to the Apple App Store for general distribution.
+*   **Development:** You can run the app on a connected device directly from Xcode during development.
