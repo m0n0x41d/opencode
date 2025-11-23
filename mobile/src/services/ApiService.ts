@@ -192,7 +192,26 @@ class ApiService {
     return [];
   }
 
+  async setModel(modelId: string) {
+    return this.patch('/config', { model: modelId });
+  }
+
   // --- Helpers ---
+
+  private async patch(endpoint: string, body: any) {
+    try {
+      const res = await fetch(`${this.baseUrl}${endpoint}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      if (!res.ok) throw new Error(`PATCH ${endpoint} failed: ${res.status}`);
+      return await res.json();
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
+  }
 
   private async post(endpoint: string, body: any) {
     try {
